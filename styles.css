@@ -1,0 +1,51 @@
+    body {
+        /* font-family: Arial, Helvetica, sans-serif; */
+        font-family: monospace, sans-serif;
+        font-size: 1.5rem;
+    }
+
+    table {
+        border-spacing: 0.8rem;
+        max-width: 1000px;
+    }
+
+    td {
+        min-width: 80px;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border: solid 1px;
+        border-color: transparent;
+        border-radius: 5px;
+    }
+
+    .main-wrapper {
+        display: flex;
+    }
+
+    .centered {
+        display: flex;
+        flex: 1 0 auto;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    input[type="text"] {
+        font-size: 2rem;
+        font-family: monospace, sans-serif;
+    }
+
+    .textbox {
+        margin: 2rem;
+    }
+
+    #input {
+        padding: 2rem;
+        margin: 2rem;
+        text-align: center;
+    }
+
+    #output {
+        color: gray;
+        padding: 3rem;
+        display: none;
+    }
