@@ -7,34 +7,31 @@
     <body>
         <div class="main-wrapper">
             <div class="centered">
-
                 <div class="word-table">
-                    <table>
-                        <tr>
-                            <td id="word-1"></td>
-                            <td id="word-2"></td>
-                            <td id="word-3"></td>
-                            <td id="word-4"></td>
-                            <td id="word-5"></td>
-                            <td id="word-6"></td>
-                        </tr>
-                        <tr>
-                            <td id="word-7"></td>
-                            <td id="word-8"></td>
-                            <td id="word-9"></td>
-                            <td id="word-10"></td>
-                            <td id="word-11"></td>
-                            <td id="word-12"></td>
-                        </tr>
-                        <tr>
-                            <td id="word-13"></td>
-                            <td id="word-14"></td>
-                            <td id="word-15"></td>
-                            <td id="word-16"></td>
-                            <td id="word-17"></td>
-                            <td id="word-18"></td>
-                        </tr>
-                    </table>
+                        <div>
+                            <span id="word-1"></span>
+                            <span id="word-2"></span>
+                            <span id="word-3"></span>
+                            <span id="word-4"></span>
+                            <span id="word-5"></span>
+                            <span id="word-6"></span>
+                        </div>
+                        <div>
+                            <span id="word-7"></span>
+                            <span id="word-8"></span>
+                            <span id="word-9"></span>
+                            <span id="word-10"></span>
+                            <span id="word-11"></span>
+                            <span id="word-12"></span>
+                        </div>
+                        <div>
+                            <span id="word-13"></span>
+                            <span id="word-14"></span>
+                            <span id="word-15"></span>
+                            <span id="word-16"></span>
+                            <span id="word-17"></span>
+                            <span id="word-18"></span>
+                        </div>
                 </div>
 
                 <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input"></input>
@@ -76,7 +73,6 @@
         let wordsArr = new Array(18);
         for (let i = 0; i < 18; i++) {
             wordsArr[i] = newWord(arr);
-            console.log("uusi sana: ", wordsArr[i]);
         }       
         return wordsArr; 
     }
@@ -84,7 +80,6 @@
     seedTableWithWords = (arr) => {
         for (let i = 0; i < arr.length; i++) {
             document.getElementById("word-" + (i + 1)).innerText = arr[i];
-            console.log("seeding table: ", arr[i]);
         }
     }
 
@@ -105,11 +100,12 @@
     let gameIsOn = true;
     let nthWord = 0;
 
-    // first word (debug)
-    //outputText.innerHTML = newWord(wordset1);
+    const currentWordBackground = "#d5d5d5";
+
+    // first word settings
     outputText.innerText = currentWords[nthWord];
     nthWord++;
-    document.getElementById("word-1").style.borderColor = "#000000";
+    document.getElementById("word-1").style.background = currentWordBackground;
 
     // timer
     let seconds = 60;
@@ -125,7 +121,7 @@
                 inputText.placeholder = "";
             }
 
-            // game over
+            // test over
             if (seconds == 0) {
                 clearInterval(x);
                 gameIsOn = false;
@@ -145,13 +141,13 @@
     }, 1000);
 
 
-    // when space key is up, check if typed word is correct
+    // when space key is up, check if typed word is correct and do stuff
     inputText.addEventListener('keyup', (e) => {
 
         // timer is started when any key is released the first time
         timerStarted = true;
 
-        // when space is pressed during the game
+        // when space-key is pressed during the game
         if(e.keyCode == 32 && gameIsOn) {
             // inputted text - space
             var text = inputText.value;
@@ -160,7 +156,6 @@
             if (text == outputText.innerText) { // if correct, clear input text and give feedback
                 inputText.value = "";
                 console.log("correct");
-                // feedback.innerHTML = "correct";
 
                 correctChars += text.length;
                 correctChars++; // + space press
@@ -168,22 +163,18 @@
                 correctWords++;
                 console.log("correct words: " + correctWords + "\tcorrect chars: " + correctChars);
 
-                // color td
+                // color word green
                 document.getElementById("word-" + (nthWord)).style.background = "#a0ffa0";
 
                 // new word
                 if (nthWord < currentWords.length) {
                     outputText.innerText = currentWords[nthWord];
                     nthWord++;
-
-                    document.getElementById("word-" + (nthWord - 1)).style.borderColor = "transparent";
-                    document.getElementById("word-" + nthWord).style.borderColor = "#000000";
+                    document.getElementById("word-" + nthWord).style.background = currentWordBackground;
                 } else {
                     currentWords = newWordArray(wordset1);
                     seedTableWithWords(currentWords);
                     nthWord = 0;
-                    console.log("teksti on : " + text);
-                    console.log("nykyinen sana on: " + currentWords[0]);
                     outputText.innerText = currentWords[0];
                     nthWord++;
                     clearTableStyles();
@@ -192,20 +183,17 @@
             } else { // if incorrect
                 inputText.value = "";
                 console.log("incorrect");
-                // feedback.innerHTML = "incorrect";
                 incorrectChars += text.length;
                 incorrectWords++;
                 console.log("incorrect words: " + incorrectWords + "\tincorrect chars: " + incorrectChars);
 
-                // color td
+                // color word red
                 document.getElementById("word-" + (nthWord)).style.background = "#ffa0a0";
 
                 // new word
                 if (nthWord < currentWords.length) {
                     outputText.innerText = currentWords[nthWord];
                     nthWord++;
-                    document.getElementById("word-" + (nthWord - 1)).style.borderColor = "transparent";
-                    document.getElementById("word-" + nthWord).style.borderColor = "#000000";
                 } else {
                     currentWords = newWordArray(wordset1);
                     seedTableWithWords(currentWords);
@@ -223,8 +211,7 @@
             inputLastChar = inputTemp[inputTemp.length-1];
 
             if (inputTemp == outputSub || (inputLastChar == " " && inputTempSub == outputSub)) {
-            // if (inputTemp == outputSub || (inputLastChar == " " && inputTemp.substr(0, inputTemp.length - 1) == outputSub)) {
-                document.getElementById("word-" + (nthWord)).style.background = "transparent";
+                document.getElementById("word-" + (nthWord)).style.background = currentWordBackground;
             } else {
                 document.getElementById("word-" + (nthWord)).style.background = "#ffa0a0";
             }
@@ -242,7 +229,7 @@
         return (chars / 5).toFixed(0);
     }
 
-    // calculate accuracy
+    // calculate accuracy stat
     accuracy = () => {
         let acc = correctChars/(correctChars + incorrectChars);
         acc *= 100;
@@ -256,9 +243,8 @@
             document.getElementById("word-" + (i)).style.background = "none";
         }
 
-        document.getElementById("word-" + (currentWords.length)).style.borderColor = "transparent";
-        // also set first word's style
-        document.getElementById("word-1").style.borderColor = "#000000";
+        // also set first word's style to 'focus'
+        document.getElementById("word-1").style.background = currentWordBackground;
     }
 
 </script>
