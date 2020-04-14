@@ -34,10 +34,14 @@
                         </div>
                 </div>
 
-                <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false"></input>
+                <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false" onkeypress="timerFunction()"></input>
                 
-                <div class="countdown">
-                        <span id="countdown">60</span>
+                <div class="textbox">
+                        <div id="countdown">60</div>
+                        <select id="language" onchange="changeLanguage()">
+                            <option value="finnish">Finnish</option>
+                            <option value="english">English</option>
+                        </select>
                 </div>
 
                 <div class="textbox" id="displayWhenDone">
@@ -55,6 +59,7 @@
     const inputText = document.getElementById("input");
     const feedback = document.getElementById("feedback");
     const countdown = document.getElementById("countdown");
+    const languageSelect = document.getElementById("language");
 
     // generate new array of 18 words
     newWordArray = (arr) => {
@@ -73,7 +78,22 @@
     }
 
     // generate array of words, and seed the table with them (using method [getWords] from external js-file)
-    let currentWords = newWordArray(wordset1);
+    let wordlist = wordsFin;
+    let currentWords = newWordArray(wordlist);
+
+    changeLanguage = () => {
+        const selected = languageSelect.value;
+
+        switch(selected) {
+            case "finnish":
+                wordlist = wordsFin;
+                break;
+            case "english":
+                wordlist = wordsEng;
+                break;
+            }
+        newWordSet();
+    }
 
     seedTableWithWords(currentWords);
 
@@ -97,38 +117,40 @@
     let seconds = 60;
     let timerStarted = false;
 
-    var timerFunction = setTimeout(function(){
-        setInterval(function(){
-            console.log(timerStarted)
-            // run timer until timer reaches zero
-            if (timerStarted && seconds > 0) {
-                seconds = seconds - 1;
-                countdown.innerText = seconds;
-                inputText.placeholder = "";
-            }
+    timerFunction = () => {
+        // only start timer if it not on already
+        if (!timerStarted) {
+            setInterval(function(){
+                // run timer until timer reaches zero
+                if (timerStarted && seconds > 0) {
+                    seconds = seconds - 1;
+                    countdown.innerText = seconds;
+                    inputText.placeholder = "";
+                }
 
-            // when test is over
-            if (seconds == 0) {
-                clearInterval(timerFunction);
-                countdown.style.display = "none";
+                // when test is over
+                if (seconds == 0) {
+                    clearInterval(timerFunction);
+                    countdown.style.display = "none";
 
-                // stop input
-                inputText.readOnly = true;
-                inputText.style.display = "none";
+                    // stop input
+                    inputText.readOnly = true;
+                    inputText.style.display = "none";
 
-                // show statistics
-                feedback.innerHTML = "WPM: " + countWPM(correctChars) 
-                    + "<br>accuracy: " + accuracy() + "%"
-                    + "<br><br>correct characters: " + correctChars
-                    + "<br>incorrect characters: " + incorrectChars
-                    + "<br><br>correct words: " + correctWords
-                    + "<br>incorrect words: " + incorrectWords;
+                    // show statistics
+                    feedback.innerHTML = "WPM: " + countWPM(correctChars) 
+                        + "<br>accuracy: " + accuracy() + "%"
+                        + "<br><br>correct characters: " + correctChars
+                        + "<br>incorrect characters: " + incorrectChars
+                        + "<br><br>correct words: " + correctWords
+                        + "<br>incorrect words: " + incorrectWords;
 
-                document.getElementById("displayWhenDone").style.display = "flex";
-            }
+                    document.getElementById("displayWhenDone").style.display = "flex";
+                }
+            }, 1000); // execute function every 1000 milliseconds
+        }
 
-        }, 1000); // execute function every 1000 milliseconds
-    }, 0);
+    } 
 
     // handle key presses
     inputText.addEventListener('keyup', (e) => {
@@ -136,6 +158,8 @@
         // timer starts when typing starts
         if (inputText.value != "" && seconds == 60) {
             timerStarted = true;
+            // hide language selection
+            languageSelect.style.display = "none";
         }
 
         // when space is pressed, check if typed word is correct
@@ -207,7 +231,7 @@
     newWordSet = () => {
         clearTableStyles();  
 
-        currentWords = newWordArray(wordset1);
+        currentWords = newWordArray(wordlist);
         seedTableWithWords(currentWords);
 
         nthWord = 0;
@@ -224,7 +248,5 @@
             newWordSet();
         }
     }
-
-
 
 </script> 
