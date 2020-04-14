@@ -35,8 +35,6 @@
                 </div>
 
                 <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false"></input>
-                <!-- <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false" onkeypress="timerFunction()"></input> -->
-
                 
                 <div class="textbox">
                         <div id="countdown">60</div>
@@ -167,7 +165,7 @@
             typedWord = typedWord.trim();
             inputText.value = "";
 
-            if (typedWord == currentWord) { // if word is correct
+            if (typedWord === currentWord) { // if word is correct
                 correctChars += typedWord.length + 1; // + space press will count as correct char
                 correctWords++;
                 console.log("correct! correct words: " + correctWords + "\tcorrect chars: " + correctChars);
