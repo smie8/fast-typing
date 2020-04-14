@@ -34,7 +34,9 @@
                         </div>
                 </div>
 
-                <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false" onkeypress="timerFunction()"></input>
+                <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false"></input>
+                <!-- <input type="text" placeholder="Type here to start" autofocus="autofocus" id="input" spellcheck="false" onkeypress="timerFunction()"></input> -->
+
                 
                 <div class="textbox">
                         <div id="countdown">60</div>
@@ -44,7 +46,7 @@
                         </select>
                 </div>
 
-                <div class="textbox" id="displayWhenDone">
+                <div id="displayWhenDone">
                         <div id="feedback"></div>
                         <button onclick="window.location.reload();">Restart</button>
                 </div>
@@ -117,40 +119,37 @@
     let seconds = 60;
     let timerStarted = false;
 
-    timerFunction = () => {
-        // only start timer if it not on already
-        if (!timerStarted) {
-            setInterval(function(){
-                // run timer until timer reaches zero
-                if (timerStarted && seconds > 0) {
-                    seconds = seconds - 1;
-                    countdown.innerText = seconds;
-                    inputText.placeholder = "";
-                }
+    var timerFunction = setTimeout(function(){
+        setInterval(function(){
+            // run timer until timer reaches zero
+            if (timerStarted && seconds > 0) {
+                seconds = seconds - 1;
+                countdown.innerText = seconds;
+                inputText.placeholder = "";
+            }
 
-                // when test is over
-                if (seconds == 0) {
-                    clearInterval(timerFunction);
-                    countdown.style.display = "none";
+            // when test is over
+            if (seconds == 0) {
+                clearInterval(timerFunction);
+                countdown.style.display = "none";
 
-                    // stop input
-                    inputText.readOnly = true;
-                    inputText.style.display = "none";
+                // stop input
+                inputText.readOnly = true;
+                inputText.style.display = "none";
 
-                    // show statistics
-                    feedback.innerHTML = "WPM: " + countWPM(correctChars) 
-                        + "<br>accuracy: " + accuracy() + "%"
-                        + "<br><br>correct characters: " + correctChars
-                        + "<br>incorrect characters: " + incorrectChars
-                        + "<br><br>correct words: " + correctWords
-                        + "<br>incorrect words: " + incorrectWords;
+                // show statistics
+                feedback.innerHTML = "WPM: " + countWPM(correctChars) 
+                    + "<br>accuracy: " + accuracy() + "%"
+                    + "<br><br>correct characters: " + correctChars
+                    + "<br>incorrect characters: " + incorrectChars
+                    + "<br><br>correct words: " + correctWords
+                    + "<br>incorrect words: " + incorrectWords;
 
-                    document.getElementById("displayWhenDone").style.display = "flex";
-                }
-            }, 1000); // execute function every 1000 milliseconds
-        }
+                document.getElementById("displayWhenDone").style.display = "flex";
+            }
 
-    } 
+        }, 1000);
+    }, 1000);
 
     // handle key presses
     inputText.addEventListener('keyup', (e) => {
@@ -216,7 +215,7 @@
         acc *= 100;
         acc = acc.toFixed(1);
         // return acc if it is number, else 0
-        return (typeof acc == 'number' ? acc : 0);
+        return (acc === NaN ? 0 : acc);
     }
 
     clearTableStyles = () => {
