@@ -155,7 +155,6 @@
             text = text.substr(0, text.length-1)
             
             if (text == currentWord) { // if correct, clear input text and give feedback
-            // if (text == outputText.innerText) { // if correct, clear input text and give feedback
                 inputText.value = "";
                 console.log("correct");
 
@@ -170,7 +169,6 @@
 
                 // new word
                 if (nthWord < currentWords.length) {
-                    // outputText.innerText = currentWords[nthWord];
                     currentWord = currentWords[nthWord];
                     nthWord++;
                     document.getElementById("word-" + nthWord).style.background = currentWordBackground;
@@ -178,7 +176,6 @@
                     currentWords = newWordArray(wordset1);
                     seedTableWithWords(currentWords);
                     nthWord = 0;
-                    //outputText.innerText = currentWords[0];
                     currentWord = currentWords[0];
                     nthWord++;
                     clearTableStyles();
@@ -196,14 +193,12 @@
 
                 // new word
                 if (nthWord < currentWords.length) {
-                    // outputText.innerText = currentWords[nthWord];
                     currentWord = currentWords[nthWord];
                     nthWord++;
                 } else {
                     currentWords = newWordArray(wordset1);
                     seedTableWithWords(currentWords);
                     nthWord = 0;
-                    // outputText.innerText = currentWords[0];
                     currentWord = currentWords[0];
                     nthWord++;
                     clearTableStyles();                    
@@ -213,7 +208,6 @@
             // check if substring is correct: if not, color text background to red
             inputTemp = inputText.value;
             inputTempSub = inputTemp.substr(0, inputTemp.length - 1);
-            // outputSub = outputText.innerText.substr(0, inputTemp.length);
             outputSub = currentWord.substr(0, inputTemp.length);
             inputLastChar = inputTemp[inputTemp.length-1];
 
