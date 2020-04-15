@@ -99,9 +99,9 @@
 
     // for calculation & statistics
     let correctWords = 0;
-    let incorrectWords = 0;
+    let wrongWords = 0;
     let correctChars = 0;
-    let incorrectChars = 0;
+    let wrongChars = 0;
     let wordsPerMinute = 0;
 
     let nthWord = 0;
@@ -139,9 +139,9 @@
                 feedback.innerHTML = "WPM: " + countWPM(correctChars) 
                     + "<br>accuracy: " + accuracy() + "%"
                     + "<br><br>correct characters: " + correctChars
-                    + "<br>incorrect characters: " + incorrectChars
+                    + "<br>wrong characters: " + wrongChars
                     + "<br><br>correct words: " + correctWords
-                    + "<br>incorrect words: " + incorrectWords;
+                    + "<br>wrong words: " + wrongWords;
 
                 document.getElementById("displayWhenDone").style.display = "flex";
             }
@@ -172,10 +172,10 @@
 
                 // color word green
                 document.getElementById("word-" + (nthWord)).style.background = "#a0ffa0";
-            } else { // if word is incorrect
-                incorrectChars += typedWord.length + 1 ;
-                incorrectWords++;
-                console.log("incorrect! incorrect words: " + incorrectWords + "\tincorrect chars: " + incorrectChars);
+            } else { // if word is wrong
+                wrongChars += typedWord.length + 1 ;
+                wrongWords++;
+                console.log("wrong! wrong words: " + wrongWords + "\twrong chars: " + wrongChars);
 
                 // color word red
                 document.getElementById("word-" + (nthWord)).style.background = "#ffa0a0";
@@ -209,7 +209,7 @@
 
     // calculate accuracy stat
     accuracy = () => {
-        let acc = correctChars/(correctChars + incorrectChars);
+        let acc = correctChars/(correctChars + wrongChars);
         acc *= 100;
         acc = acc.toFixed(1);
         // return acc if it is number, else 0
