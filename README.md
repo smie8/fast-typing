@@ -5,6 +5,6 @@ You have 60 seconds to type as many words that you can, correctly. Words per min
 
 That's it. Have fun typing! You can try FastTyping directly using this link: https://raw.githack.com/smie8/fasttyping/master/
 
-Sources used for words:
+Word list sources:
 - Finnish: https://saaressa.blogspot.com/2013/08/suomen-tarkeimmat-sanat.html
 - English: https://www.ef.com/wwen/english-resources/english-vocabulary/top-1000-words
